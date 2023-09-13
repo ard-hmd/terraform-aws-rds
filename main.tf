@@ -24,7 +24,7 @@
 # }
 
 resource "aws_db_instance" "my_db_instances" {
-  count = length(var.database_configurations)
+  count = var.rds_instance_count
 
   engine                  = "mysql"
   identifier              = var.database_configurations[count.index].identifier
