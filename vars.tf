@@ -4,6 +4,10 @@ variable "aws_region" {
   description = "Default AWS region where resources will be created."
 }
 
+variable "allowed_cidrs" {
+  description = "SG allowed CIDR"
+}
+
 variable "database_configurations" {
   description = "List of database configurations."
   type = list(object({
@@ -20,7 +24,6 @@ variable "database_configurations" {
     publicly_accessible     = bool
     backup_retention_period = number
     vpc_id                  = string
-    allowed_cidrs           = string
   }))
   default = []
 }
