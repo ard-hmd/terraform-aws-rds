@@ -21,7 +21,10 @@ variable "database_configurations" {
     backup_retention_period = number
     vpc_id                  = string
     allowed_cidrs           = string
+    is_replica              = bool            # Nouveau champ pour indiquer s'il s'agit d'une réplique
+    source_db_identifier    = string          # Nouveau champ pour l'identifiant de la base source (pour les réplicas)
   }))
   default = []
 }
+
 
