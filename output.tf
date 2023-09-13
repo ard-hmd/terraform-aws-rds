@@ -15,8 +15,3 @@ output "db_instance_identifier" {
   description = "The identifier of the RDS instance"
   value       = aws_db_instance.my_db_instances[count.index].identifier
 }
-
-output "rds_sg_id" {
-  description = "ID of the RDS Security Group"
-  value       = aws_security_group.rds_sg.*.id
-}

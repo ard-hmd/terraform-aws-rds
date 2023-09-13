@@ -21,7 +21,6 @@ variable "database_configurations" {
     backup_retention_period = number
     vpc_id                  = string
     allowed_cidrs           = string
-    rds_sg_id               = string
   }))
   default = []
 }
