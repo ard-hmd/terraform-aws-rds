@@ -58,7 +58,11 @@ resource "aws_db_instance" "my_db_instances" {
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
 
-  # Condition pour déterminer s'il s'agit d'une réplique ou non
-  # Si c'est une réplique, utilisez les paramètres de réplica
-  replica_source_db_identifier = each.value.is_replica ? each.value.source_db_identifier : null
+  # Create read replicas for this DB instance
+  read_replica {
+    identifier              = "${each.value.identifier}-replica"  # Identifier for the replica
+    count                   = each.value.replica_count  # Number of replicas to create
+    instance_class          = each.value.replica_instance_class
+    db_subnet_group_name    = each.value.db_subnet_group_name
+  }
 }
