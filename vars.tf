@@ -20,6 +20,7 @@ variable "database_configurations" {
     publicly_accessible     = bool
     backup_retention_period = number
     vpc_id                  = string
+    allowed_cidrs           = string
   }))
   default = []
 }
