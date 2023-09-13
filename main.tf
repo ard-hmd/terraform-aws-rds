@@ -2,7 +2,7 @@ resource "aws_security_group" "rds_sg" {
   count       = length(var.database_configurations)
   name        = "rds-sg-${var.database_configurations[count.index].identifier}"
   description = "Security Group for RDS instance ${var.database_configurations[count.index].identifier}"
-  vpc_id      = var.vpc_id
+  vpc_id      = var.database_configurations[count.index].vpc_id
 
   ingress {
     from_port   = 3306
