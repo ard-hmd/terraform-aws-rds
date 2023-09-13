@@ -16,7 +16,6 @@ variable "database_configurations" {
     db_password             = string
     parameter_group_name    = string
     db_subnet_group_name    = string
-    rds_sg_id               = string
     skip_final_snapshot     = bool
     publicly_accessible     = bool
     backup_retention_period = number
