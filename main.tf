@@ -58,11 +58,6 @@ resource "aws_db_instance" "my_db_instances" {
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
 
-  # Create read replicas for this DB instance
-  read_replica {
-    identifier              = "${each.value.identifier}-replica"  # Identifier for the replica
-    count                   = each.value.replica_count  # Number of replicas to create
-    instance_class          = each.value.replica_instance_class
-    db_subnet_group_name    = each.value.db_subnet_group_name
-  }
+  // Réplique l'instance source spécifiée
+  replicate_source_db = each.value.replicate_source_db
 }
