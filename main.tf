@@ -24,20 +24,20 @@
 # }
 
 resource "aws_db_instance" "my_db_instances" {
-  count = var.rds_instance_count
+  for_each = { for idx, config in var.database_configurations : idx => config }
 
   engine                  = "mysql"
-  identifier              = var.database_configurations[count.index].identifier
-  allocated_storage       = var.database_configurations[count.index].allocated_storage
-  engine_version          = var.database_configurations[count.index].engine_version
-  instance_class          = var.database_configurations[count.index].instance_class
-  db_name                 = var.database_configurations[count.index].db_name
-  username                = var.database_configurations[count.index].db_username
-  password                = var.database_configurations[count.index].db_password
-  parameter_group_name    = var.database_configurations[count.index].parameter_group_name
-  db_subnet_group_name    = var.database_configurations[count.index].db_subnet_group_name
-  skip_final_snapshot     = var.database_configurations[count.index].skip_final_snapshot
-  publicly_accessible     = var.database_configurations[count.index].publicly_accessible
-  backup_retention_period = var.database_configurations[count.index].backup_retention_period
+  identifier              = each.value.identifier
+  allocated_storage       = each.value.allocated_storage
+  engine_version          = each.value.engine_version
+  instance_class          = each.value.instance_class
+  db_name                 = each.value.db_name
+  username                = each.value.db_username
+  password                = each.value.db_password
+  parameter_group_name    = each.value.parameter_group_name
+  db_subnet_group_name    = each.value.db_subnet_group_name
+  skip_final_snapshot     = each.value.skip_final_snapshot
+  publicly_accessible     = each.value.publicly_accessible
+  backup_retention_period = each.value.backup_retention_period
 }
 
