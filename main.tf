@@ -39,5 +39,6 @@ resource "aws_db_instance" "my_db_instances" {
   skip_final_snapshot     = each.value.skip_final_snapshot
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
+  multi_az                = each.value.multi_az
 }
 
