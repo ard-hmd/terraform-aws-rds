@@ -1,28 +1,3 @@
-# resource "aws_security_group" "rds_sg" {
-#   count       = length(var.database_configurations)
-#   name        = "rds-sg-${var.database_configurations[count.index].identifier}"
-#   description = "Security Group for RDS instance ${var.database_configurations[count.index].identifier}"
-#   vpc_id      = var.database_configurations[count.index].vpc_id
-
-#   ingress {
-#     from_port   = 3306
-#     to_port     = 3306
-#     protocol    = "tcp"
-#     cidr_blocks = [var.database_configurations[count.index].allowed_cidrs]
-#   }
-
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
-
-#   tags = {
-#     Name = "rds-sg-${var.database_configurations[count.index].identifier}"
-#   }
-# }
-
 resource "aws_db_instance" "my_db_instances" {
   for_each = { for idx, config in var.database_configurations : idx => config }
 

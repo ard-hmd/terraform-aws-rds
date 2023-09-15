@@ -12,8 +12,3 @@ output "db_instance_identifier" {
   description = "The identifiers of the RDS instances"
   value       = { for idx, instance in aws_db_instance.my_db_instances : idx => instance.identifier }
 }
-
-output "rds_instances" {
-  description = "RDS instances created by the module"
-  value       = aws_db_instance.my_db_instances
-}
