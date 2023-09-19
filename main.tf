@@ -1,3 +1,29 @@
+resource "aws_security_group" "rds_sg" {
+  for_each = { for idx, config in var.database_configurations : idx => config }
+
+  name        = each.value.sg_name
+  description = each.value.sg_description
+  vpc_id      = each.value.vpc_id
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = each.value.allowed_cidrs
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = each.value.sg_name
+  }
+}
+
 resource "aws_db_instance" "my_db_instances" {
   for_each = { for idx, config in var.database_configurations : idx => config }
 
@@ -15,5 +41,6 @@ resource "aws_db_instance" "my_db_instances" {
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
   multi_az                = each.value.multi_az
+  vpc_security_group_ids = [aws_security_group.rds_sg[each.key].id]
 }
 
