@@ -1,9 +1,10 @@
 # Set the default AWS region for the resources
 variable "aws_region" {
-  default = "eu-west-3"
+  default     = "eu-west-3"
   description = "Default AWS region where resources will be created."
 }
 
+# List of database configurations
 variable "database_configurations" {
   description = "List of database configurations."
   type = list(object({
@@ -28,5 +29,9 @@ variable "database_configurations" {
   default = []
 }
 
-
-
+# Prefix for resource names
+variable "resource_name_prefix" {
+  description = "Prefix for resource names."
+  type        = string
+  default     = "terraform-aws-rds-"
+}

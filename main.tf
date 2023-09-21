@@ -1,3 +1,4 @@
+# Define the security group for RDS databases
 resource "aws_security_group" "rds_sg" {
   for_each = { for idx, config in var.database_configurations : idx => config }
 
@@ -5,6 +6,7 @@ resource "aws_security_group" "rds_sg" {
   description = each.value.sg_description
   vpc_id      = each.value.vpc_id
 
+  # Allow incoming traffic on port 3306 (MySQL) from the specified CIDR blocks
   ingress {
     from_port   = 3306
     to_port     = 3306
@@ -12,6 +14,7 @@ resource "aws_security_group" "rds_sg" {
     cidr_blocks = each.value.allowed_cidrs
   }
 
+  # Allow all outgoing traffic
   egress {
     from_port   = 0
     to_port     = 0
@@ -20,10 +23,12 @@ resource "aws_security_group" "rds_sg" {
   }
 
   tags = {
-    Name = each.value.sg_name
+    Name   = each.value.sg_name
+    Prefix = var.resource_name_prefix
   }
 }
 
+# Create RDS database instances based on the provided configurations
 resource "aws_db_instance" "my_db_instances" {
   for_each = { for idx, config in var.database_configurations : idx => config }
 
@@ -41,6 +46,10 @@ resource "aws_db_instance" "my_db_instances" {
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
   multi_az                = each.value.multi_az
-  vpc_security_group_ids = [aws_security_group.rds_sg[each.key].id]
-}
+  vpc_security_group_ids  = [aws_security_group.rds_sg[each.key].id]
 
+  tags = {
+    Name   = each.value.identifier
+    Prefix = var.resource_name_prefix
+  }
+}
