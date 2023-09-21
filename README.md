@@ -12,7 +12,7 @@ This module provides a Terraform solution for creating and managing RDS instance
 
 To use this module in your Terraform configuration:
 
-\```hcl
+```hcl
 module "aws_rds" {
   source = "github.com/ard-hmd/terraform-aws-rds.git"
 
@@ -39,7 +39,7 @@ module "aws_rds" {
     }
   ]
 }
-\```
+```
 
 ## Variables
 
