@@ -46,7 +46,6 @@ resource "aws_db_instance" "my_db_instances" {
   publicly_accessible     = each.value.publicly_accessible
   backup_retention_period = each.value.backup_retention_period
   multi_az                = each.value.multi_az
-  availability_zone       = each.value.availability_zone
   vpc_security_group_ids  = [aws_security_group.rds_sg[each.key].id]
 
   tags = {

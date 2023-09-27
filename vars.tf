@@ -25,7 +25,6 @@ variable "database_configurations" {
     sg_name                 = string
     sg_description          = string
     multi_az                = bool
-    availability_zone       = string
   }))
   default = []
 }
